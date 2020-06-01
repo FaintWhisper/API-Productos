@@ -7,26 +7,26 @@ const localStorage = require('localStorage');
 	const productos = []
 	const categorias = []
 	
-	localStorage.setItem('productos', productos)
-	localStorage.setItem('categorias', categorias)
+	localStorage.setItem('productos', JSON.stringify(productos));
+	localStorage.setItem('categorias', JSON.stringify(categorias));
 })();
 
 getProductos = () => {
-	newProductos = localStorage.getItem('productos')
+	newProductos = JSON.parse(localStorage.getItem('productos'));
 	return newProductos;
 }
 
 getCategorias = () => {
-	newCategorias = localStorage.getItem('categorias')
+	newCategorias = JSON.parse(localStorage.getItem('categorias'));
 	return newCategorias;
 }
 
 saveProductos = newProductos => {
-	localStorage.setItem('productos', newProductos);
+	localStorage.setItem('productos', JSON.stringify(newProductos));
 }
 
 saveCategorias = newCategorias => {
-	localStorage.setItem('categorias', newCategorias);
+	localStorage.setItem('categorias', JSON.stringify(newCategorias));
 }
 
 // Página de Inicio
@@ -152,6 +152,7 @@ app.get('/Productos/categoria/:idCategoria', (req, res) => {
 	
 	productos = getProductos();
 	productosCategoria = productos.filter(p => p.idCategoria == idCategoria);
+	productosCategoria = productos;
 	res.send(productosCategoria);
 })
 
