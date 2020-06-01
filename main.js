@@ -4,12 +4,21 @@ const localStorage = require('localStorage');
 
 (() => {
 	// Inicialización de la persistencia
-	const productos = []
+	const prodPrueba = {
+		idProducto: 2020,
+		descripcion: "Monitor 21 pulgadas",
+		categoria: {
+			descripcion: "Material informático",
+			idCategoria: 3
+		}
+	}
+	const productos = [prodPrueba]
 	const categorias = []
 	
 	localStorage.setItem('productos', JSON.stringify(productos));
 	localStorage.setItem('categorias', JSON.stringify(categorias));
 })();
+
 
 getProductos = () => {
 	newProductos = JSON.parse(localStorage.getItem('productos'));
@@ -151,8 +160,8 @@ app.get('/Productos/categoria/:idCategoria', (req, res) => {
 	const idCategoria = req.param('idCategoria');
 	
 	productos = getProductos();
-	productosCategoria = productos.filter(p => p.idCategoria == idCategoria);
-	productosCategoria = productos;
+	console.log(productos);
+	productosCategoria = productos.filter(p => p.categoria.idCategoria == idCategoria);
 	res.send(productosCategoria);
 })
 
@@ -160,10 +169,10 @@ app.get('/Productos/categoria/:idCategoria', (req, res) => {
 
 // /Productos/query/{query}
 app.get('/Productos/query/:query', (req, res) => {
-	const query = req.param('query');
+	const query = req.param('query').toLowerCase();
 	
 	productos = getProductos();
-	productosQuery = productos.filter(p => p.descripcion.includes(query));
+	productosQuery = productos.filter(p => p.descripcion.toLowerCase().includes(query));
 	res.send(productosQuery);
 })
  
